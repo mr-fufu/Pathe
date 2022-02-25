@@ -8,6 +8,7 @@ public class Encounter : MonoBehaviour
     public NodeType type;
     public Sprite cardSprite;
     public string cardTitle;
-    public string cardText;
+    public Text cardText;
     public List<choice> choices;
+    public bool seen = false;
 }

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class choice : MonoBehaviour
 {
     public string choiceText;
-    public string resultText;
+    public Text resultText;
     public int healthChange;
     public int wealthChange;
-    public List<Text> trackers;
+    public List<string> trackers;
 }
