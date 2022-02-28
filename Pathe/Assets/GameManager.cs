@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     private List<bool> directions = new List<bool>{false, false, false};
     private List<bool> blockDirections = new List<bool> { false, false, false };
 
+    public List<GameObject> inventoryItems;
+    private List<GameObject> currentInventory = new List<GameObject> { };
+    public Transform inventoryContainer;
+
     private Dictionary<NodeType, int> amountPerNode;
 
     public GameObject textPanel;
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
     public GameObject statsPanel;
     public GameObject pointer;
     public TextMeshPro pointerText;
+    public TextMeshPro underPointerText;
 
     private Encounter chosenEncounter;
 
@@ -61,6 +66,11 @@ public class GameManager : MonoBehaviour
     private float alpha = 1;
     private Color colorHold;
     private bool changeComplete;
+    private int shiftIndex = 0;
+
+    private List<choice> availableChoices = new List<choice> { };
+    public riseAndDisappear healthRise;
+    public riseAndDisappear wealthRise;
 
     void Start()
     {
@@ -129,6 +139,8 @@ public class GameManager : MonoBehaviour
                         colorMode = false;
                         chooseMode = false;
                         Progress();
+                        healthRise.completeRise();
+                        wealthRise.completeRise();
                         forward = true;
                     }
                 }
@@ -225,27 +237,28 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     selectedOption++;
-                    if (selectedOption >= chosenEncounter.choices.Count)
+                    if (selectedOption >= 4)
                     {
-                        selectedOption = chosenEncounter.choices.Count - 1;
+                        selectedOption = 3;
                     }
                     moveSelect(selectedOption);
                 }
-                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     selectedOption--;
-                    if (selectedOption < 0)
+                    if (selectedOption < shiftIndex)
                     {
-                        selectedOption = 0;
+                        selectedOption = shiftIndex;
                     }
                     moveSelect(selectedOption);
                 }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    selectChoice(chosenEncounter.choices[selectedOption]);
+                    //Debug.Log("Selected Option : " + (selectedOption - shiftIndex));
+                    selectChoice(availableChoices[selectedOption - shiftIndex]);
                 }
             }
         }
@@ -306,7 +319,12 @@ public class GameManager : MonoBehaviour
     void moveSelect(int selected)
     {
         selector.transform.position = cardChoices[selected].transform.position;
-        selector.GetComponent<SpriteRenderer>().size = new Vector2((cardChoices[selected].text.Length + 5) * 6f, 18);
+        float width = (cardChoices[selected].text.Length + 6) *5f;
+        if (width > 175) 
+        {
+            width = 175;
+        }
+        selector.GetComponent<SpriteRenderer>().size = new Vector2(width, 18);
     }
 
     void Progress()
@@ -565,46 +583,95 @@ public class GameManager : MonoBehaviour
         int indexEncounter = 0;
         int counter = 0;
 
-        do
+        bool breakCondition = true;
+
+        Encounter checkEncounter;
+
+        do 
         {
+            bool satisfiesPreTrack = true;
+
             indexEncounter = Random.Range(0, encountersList.Count);
-            chosenEncounter = encountersList[indexEncounter];
+            checkEncounter = encountersList[indexEncounter];
+
+            if (checkEncounter.preTrackers.Count > 0)
+            {
+                foreach (string track in checkEncounter.preTrackers)
+                {
+                    if (!trackers.Contains(track.ToLower()))
+                    {
+                        satisfiesPreTrack = false;
+                    }
+                }
+            }
+
+            if (checkEncounter.type == currentType && satisfiesPreTrack)
+            {
+                chosenEncounter = checkEncounter;
+                //Debug.Log("Found Encounter : " + chosenEncounter);
+                breakCondition = false;
+                break;
+            }
+
             counter++;
 
             if (counter > 100)
             {
                 Debug.Log("Failed to find encounter!");
+                chosenEncounter = encountersList[0];
                 break;
             }
         }
-        while (!(chosenEncounter.type == currentType && chosenEncounter.seen == false));
+        while(breakCondition);
+        
+        //Debug.Log(encountersList[indexEncounter]);
+        //Debug.Log(indexEncounter);
 
-        Debug.Log(encountersList[indexEncounter]);
-        Debug.Log(indexEncounter);
+        encountersList.RemoveAt(indexEncounter);
 
-        encountersList[indexEncounter].seen = true;
+        //encountersList[indexEncounter].seen = true;
 
         cardImage.sprite = chosenEncounter.cardSprite;
         cardTitle.text = chosenEncounter.cardTitle;
         cardText.text = chosenEncounter.cardText.text;
 
+        clearSelect();
+
+        List<string> choicesText = new List<string> { };
+
         for (int choiceIndex = 0; choiceIndex < 4; choiceIndex++)
         {
             if (choiceIndex < chosenEncounter.choices.Count)
             {
-                cardChoices[choiceIndex].text = chosenEncounter.choices[choiceIndex].choiceText;
-            }
-            else
-            {
-                cardChoices[choiceIndex].text = " ";
+                bool missingTrackers = false;
+
+                foreach (string track in chosenEncounter.choices[choiceIndex].preTrackers)
+                {
+                    if (!trackers.Contains(track.ToLower()))
+                    {
+                        missingTrackers = true;
+                    }
+                }
+
+                if (!missingTrackers)
+                {
+                    availableChoices.Add(chosenEncounter.choices[choiceIndex]);
+                    choicesText.Add(chosenEncounter.choices[choiceIndex].choiceText);
+                }
             }
         }
 
-        chooseMode = true;
-        if (chosenEncounter.choices.Count > 0)
+        shiftIndex = 4 - choicesText.Count;
+
+        for (int textIndex = 0; textIndex < choicesText.Count; textIndex++)
         {
-            selectedOption = chosenEncounter.choices.Count - 1;
+            cardChoices[textIndex + shiftIndex].text = choicesText[textIndex];
         }
+
+        chooseMode = true;
+
+        selectedOption = shiftIndex;
+
         moveSelect(selectedOption);
     }
 
@@ -618,17 +685,34 @@ public class GameManager : MonoBehaviour
     
     void selectChoice(choice selectedChoice)
     {
-        changeStats(selectedChoice.healthChange, selectedChoice.wealthChange);
+        int healVal = selectedChoice.healthChange;
+        int wealVal = selectedChoice.wealthChange;
+        changeStats(healVal, wealVal);
+
+        if (healVal == 0 || wealVal == 0)
+        {
+            //Debug.Log("health/wealth value are : " + healVal + wealVal);
+
+            healthRise.initiateRise(selectedChoice.healthChange, wealVal == 0);
+            wealthRise.initiateRise(selectedChoice.wealthChange, healVal == 0);
+        }
+        else
+        {
+            //Debug.Log("health/wealth value are : " + healVal + wealVal);
+
+            healthRise.initiateRise(selectedChoice.healthChange, false);
+            wealthRise.initiateRise(selectedChoice.wealthChange, false);
+        }
+
 
         foreach (var stringToAdd in selectedChoice.trackers)
         {
-            trackers.Add(stringToAdd);
-            checkTracker(stringToAdd);
+            checkTracker(stringToAdd.ToLower());
         }
 
         clearSelect();
-        cardChoices[0].text = "Accept.";
-        moveSelect(0);
+        cardChoices[3].text = "Accept.";
+        moveSelect(3);
 
         colorMode = true;
         fade = true;
@@ -636,12 +720,64 @@ public class GameManager : MonoBehaviour
 
     void showText()
     {
-        cardText.text = chosenEncounter.choices[selectedOption].resultText.text;
+        cardText.text = availableChoices[selectedOption - shiftIndex].resultText.text;
+        availableChoices.Clear();
     }
 
     void checkTracker(string trackerToCheck)
     {
+        if (trackerToCheck.StartsWith("getinv"))
+        {
+            GameObject invItem = null;
+            foreach (var invInList in inventoryItems)
+            {
+                if (invInList.name.ToLower() == trackerToCheck.Substring(3))
+                {
+                    invItem = invInList;
+                    //Debug.Log("Inventory item was found : " + trackerToCheck.Substring(3));
+                    break;
+                }
+            }
+            if (invItem == null)
+            {
+                Debug.Log("Inventory item was not found : " + trackerToCheck.Substring(3));
+            }
+            else
+            {
+                GameObject newInv = GameObject.Instantiate(invItem, inventoryContainer);
+                newInv.name = trackerToCheck.Substring(3);
+                currentInventory.Add(newInv);
+                trackers.Add(trackerToCheck.Substring(3));
+            }
+        }
+        else if (trackerToCheck.StartsWith("reminv"))
+        {
+            bool foundInv = false;
+            foreach (var invToCheck in currentInventory)
+            {
+                if (invToCheck.name == trackerToCheck.Substring(3))
+                {
+                    currentInventory.Remove(invToCheck);
 
+                    Debug.Log(invToCheck.name);
+
+                    trackers.Remove(invToCheck.name);
+
+                    Destroy(invToCheck);
+                    foundInv = true;
+
+                    break;
+                }
+            }
+            if (!foundInv)
+            {
+                Debug.Log("Inventory item was not found : " + trackerToCheck.Substring(3));
+            }
+        }
+        else
+        {
+            trackers.Add(trackerToCheck);
+        }
     }
 
     void ShowPanels(bool show)

@@ -50,13 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choiceText: Scrounge for scraps
+  preTrackers: []
+  choiceText: Buy some meat to eat
   resultText: {fileID: 682206654176968793}
-  healthChange: 1
-  wealthChange: 0
+  healthChange: 3
+  wealthChange: -5
   trackers:
-  - greed
-  - visMarket
+  - visButcher
+  - carnivore
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -96,8 +97,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You find a few meager scraps of dried meat that do little to sate your
-    hunger.
+  m_Text: You decide to purchase a prime cut of meat, ensuring that the Butcher chooses
+    one with as little decomposition present as possible. You roast it over your
+    campfire that night and eat around the grey bits.
 --- !u!1 &1649059044454309619
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,14 +132,16 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6547609200226236759}
+  - {fileID: 4472062480845918348}
   - {fileID: 8702746272486881765}
+  - {fileID: 2333670641385403631}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 300}
+  m_SizeDelta: {x: 200, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1649059044454309615
 MonoBehaviour:
@@ -151,13 +155,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88becd1999c4e14882d74f2d6c242e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preTrackers: []
   type: 1
   cardSprite: {fileID: 21300000, guid: f63107cb5e4d12a4fb00e4bb18a644b1, type: 3}
-  cardTitle: Abandoned Market
+  cardTitle: Butcher Shop
   cardText: {fileID: 2875867112815173472}
   choices:
-  - {fileID: 2654485021638091215}
   - {fileID: 5065046240894660544}
+  - {fileID: 1510225996959921317}
+  - {fileID: 2654485021638091215}
+  - {fileID: 4832965355794953193}
   seen: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
@@ -198,7 +205,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A filthy butcher's
+  m_Text: Set upon by a foul odour, you find yourself at a Butcher Shop. Crates of
+    meat and sinew litter the property. You are beckoned by the curling finger of
+    a man reeking of death and decay. He offers you his wares, and assures you they
+    are of the highest quality.
 --- !u!212 &8081238696716248325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -262,7 +272,7 @@ GameObject:
   - component: {fileID: 3464431482023469307}
   - component: {fileID: 3245388796421166381}
   m_Layer: 0
-  m_Name: Choice2
+  m_Name: Choice3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,11 +290,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 113788333793703074}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -40}
+  m_AnchoredPosition: {x: 350, y: 40}
   m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2654485021638091215
@@ -299,12 +309,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choiceText: Scrounge for coin
+  preTrackers: []
+  choiceText: Buy the "Special of the Day"
   resultText: {fileID: 3245388796421166381}
   healthChange: 0
-  wealthChange: 2
+  wealthChange: -2
   trackers:
   - visMarket
+  - getinvOffal
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -344,4 +356,210 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You find a few coins tucked beneath the counter.
+  m_Text: 'The Butcher''s "Special of the Day" turns out to be a sack of offal, though
+    what creature they came from the man would not say.
+
+
+    You get some [OFFAL]'
+--- !u!1 &7549479692042465297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2333670641385403631}
+  - component: {fileID: 4832965355794953193}
+  - component: {fileID: 4454515181908343085}
+  - component: {fileID: 3051227764281212901}
+  m_Layer: 0
+  m_Name: Choice4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2333670641385403631
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549479692042465297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 113788333793703074}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 350, y: -40}
+  m_SizeDelta: {x: 200, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4832965355794953193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549479692042465297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTrackers: []
+  choiceText: Leave
+  resultText: {fileID: 3051227764281212901}
+  healthChange: 0
+  wealthChange: 0
+  trackers:
+  - visMarket
+--- !u!222 &4454515181908343085
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549479692042465297}
+  m_CullTransparentMesh: 0
+--- !u!114 &3051227764281212901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549479692042465297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 10
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: You decide that you would rather die of starvation than try a bite of this
+    rotting meat.
+--- !u!1 &8759966938248820004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4472062480845918348}
+  - component: {fileID: 1510225996959921317}
+  - component: {fileID: 3367692593505173497}
+  - component: {fileID: 1398382901998972163}
+  m_Layer: 0
+  m_Name: Choice2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4472062480845918348
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759966938248820004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 113788333793703074}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 150, y: -40}
+  m_SizeDelta: {x: 200, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1510225996959921317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759966938248820004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTrackers: []
+  choiceText: Buy some meat for later
+  resultText: {fileID: 1398382901998972163}
+  healthChange: 0
+  wealthChange: -5
+  trackers:
+  - visButcher
+  - getinvMeat
+--- !u!222 &3367692593505173497
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759966938248820004}
+  m_CullTransparentMesh: 0
+--- !u!114 &1398382901998972163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759966938248820004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 10
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'You decide to purchase a prime cut of meat, ensuring that the Butcher
+    chooses one with as little decomposition present as possible. You tuck it away
+    into your knapsack, praying that it won''t taint the leather.
+
+
+    You get some
+    <font="Pixel Takhisis" material = "Pixel Takhisis Material">MEAT</font /material>'

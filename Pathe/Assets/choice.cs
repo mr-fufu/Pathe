@@ -6,6 +6,7 @@ using TMPro;
 
 public class choice : MonoBehaviour
 {
+    public List<string> preTrackers;
     public string choiceText;
     public Text resultText;
     public int healthChange;
