@@ -12,4 +12,6 @@ public class choice : MonoBehaviour
     public int healthChange;
     public int wealthChange;
     public List<string> trackers;
+    public bool subChoice;
+    public List<choice> subChoices;
 }

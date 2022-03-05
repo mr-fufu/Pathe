@@ -51,12 +51,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Kill the creature
+  choiceText: Kill the creature with your bare hands
   resultText: {fileID: 682206654176968793}
   healthChange: -2
   wealthChange: 0
   trackers:
-  - killedDeer
+  - leftDeer
+  subChoice: 0
+  subChoices: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -96,8 +98,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The deer is silent save for the snapping of cartilage as it twists and
-    breaks. It twitches, as you watch the light from its eyes slowly dim.
+  m_Text: The deer kicks and struggles as you wrestle it to the ground. The snap
+    of cartilage brings silence as its neck twists and breaks. It twitches, and you
+    watch the light dim slowly from its eyes.
 --- !u!1 &1649059044454309619
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,12 +310,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Kill the creature with [CLEAN AXE]
+  choiceText: Kill the creature with [BLOODY AXE]
   resultText: {fileID: 6798947382133181514}
-  healthChange: -2
+  healthChange: 0
   wealthChange: 0
   trackers:
-  - killedDeer
+  - leftDeer
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3721131964924278989
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -352,7 +357,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: With a clean swing of your axe, you cleave through the back of the deer's
+  m_Text: (4) With a savage swing of your axe, you cleave into the back of the deer's
     neck and it crumples like a house of cards. The body makes a dull thump as it
     hits the ground.
 --- !u!1 &8759966938248820004
@@ -412,6 +417,8 @@ MonoBehaviour:
   wealthChange: 0
   trackers:
   - leftDeer
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3367692593505173497
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -503,12 +510,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Kill the creature with [BLOODY AXE]
+  choiceText: Kill the creature with [CLEAN AXE]
   resultText: {fileID: 4477015834726004665}
-  healthChange: -2
+  healthChange: 0
   wealthChange: 0
   trackers:
-  - killedDeer
+  - reminvCleanAxe
+  - getinvBloodyAxe
+  subChoice: 0
+  subChoices: []
 --- !u!222 &8760210972832711573
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -548,5 +558,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: With a clean swing of your axe, you cleave through the back of the deer's
+  m_Text: 'With a clean swing of your axe, you cleave through the back of the deer''s
     neck and it crumples like a house of cards. It is dead before it hits the ground.
+
+
+    Your
+    [CLEAN AXE] is now a [BLOODY AXE]'

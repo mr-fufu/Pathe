@@ -58,6 +58,8 @@ MonoBehaviour:
   wealthChange: 0
   trackers:
   - visChapel
+  subChoice: 0
+  subChoices: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +138,6 @@ RectTransform:
   m_Children:
   - {fileID: 6547609200226236759}
   - {fileID: 8702746272486881765}
-  - {fileID: 485720381878533775}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -157,8 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88becd1999c4e14882d74f2d6c242e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preTrackers:
-  - visGallows
+  preTrackers: []
   type: 1
   cardSprite: {fileID: 21300000, guid: e223d89d1c76b21469110e0359ddff16, type: 3}
   cardTitle: Lonely Chapel
@@ -166,7 +166,7 @@ MonoBehaviour:
   choices:
   - {fileID: 5065046240894660544}
   - {fileID: 2654485021638091215}
-  - {fileID: 7883599922192246857}
+  - {fileID: 0}
   seen: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
@@ -319,6 +319,9 @@ MonoBehaviour:
   wealthChange: 10
   trackers:
   - visChapel
+  - getinvChalice
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -358,106 +361,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Entering the chapel brings you no solace, evokes no faith.  Your breaths
+  m_Text: 'Entering the chapel brings you no solace, evokes no faith.  Your breaths
     disturb the dust suspended in the tainted air.  Broken relics crush underfoot
     as you crudely vault the overturned pews.  The yet unscathed altar stands defiantly,
     mocking you.  You pilfer the altar of what you can carry in hand.  Worn figures
     in the murals witness your profane plundering.  You expect someone to rebuke
     you, but the chapel is cold and silent.
---- !u!1 &2868103494396466501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 485720381878533775}
-  - component: {fileID: 7883599922192246857}
-  - component: {fileID: 6540945396260600831}
-  - component: {fileID: 2013156886577437202}
-  m_Layer: 0
-  m_Name: Choice3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &485720381878533775
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868103494396466501}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 113788333793703074}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -40}
-  m_SizeDelta: {x: 200, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7883599922192246857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868103494396466501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  preTrackers: []
-  choiceText: Leave
-  resultText: {fileID: 2013156886577437202}
-  healthChange: 0
-  wealthChange: 0
-  trackers:
-  - visChapel
---- !u!222 &6540945396260600831
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868103494396466501}
-  m_CullTransparentMesh: 0
---- !u!114 &2013156886577437202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868103494396466501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 8
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
+
+
+    You find a [HOLY CHALICE]'

@@ -58,6 +58,8 @@ MonoBehaviour:
   trackers:
   - getinvLostRosary
   - visGallows
+  subChoice: 0
+  subChoices: []
 --- !u!222 &7324082071384836316
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -161,6 +163,8 @@ MonoBehaviour:
   trackers:
   - reflected
   - visGallows
+  subChoice: 0
+  subChoices: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -421,6 +425,9 @@ MonoBehaviour:
   trackers:
   - getinvBloodyAxe
   - visGallows
+  - addmusTestBird
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0

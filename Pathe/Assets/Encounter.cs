@@ -11,6 +11,7 @@ public class Encounter : MonoBehaviour
     public string cardTitle;
     public Text cardText;
     public List<choice> choices;
+    [System.NonSerialized]
     public bool seen = false;
 
     private void Start()

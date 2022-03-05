@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2167219483634011831}
   - component: {fileID: 6154335855519424432}
   - component: {fileID: 6931504141781982400}
+  - component: {fileID: -6542906554917376002}
   m_Layer: 0
   m_Name: invOffal
   m_TagString: Untagged
@@ -108,3 +109,15 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &-6542906554917376002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154335855519424438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f055aa363da08d142b123802da48d9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

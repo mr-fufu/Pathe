@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preTrackers: []
+  preTrackers:
+  - invBloodyAxe
   choiceText: Clean the BLOODY AXE
   resultText: {fileID: 682206654176968793}
   healthChange: 0
@@ -59,6 +60,8 @@ MonoBehaviour:
   - visBanks
   - reminvBloodyAxe
   - getinvCleanAxe
+  subChoice: 0
+  subChoices: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -317,6 +320,8 @@ MonoBehaviour:
   trackers:
   - visBanks
   - getinvSmoothStone
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0

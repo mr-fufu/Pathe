@@ -59,6 +59,8 @@ MonoBehaviour:
   - visBanks
   - reminvBloodyAxe
   - getinvCleanAxe
+  subChoice: 0
+  subChoices: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -158,12 +160,11 @@ MonoBehaviour:
   preTrackers: []
   type: 3
   cardSprite: {fileID: 21300000, guid: f63825aaf43bf724f813ff31e7abc938, type: 3}
-  cardTitle: Abandoned Market
+  cardTitle: Calm Pond
   cardText: {fileID: 2875867112815173472}
   choices:
   - {fileID: 5065046240894660544}
   - {fileID: 2654485021638091215}
-  seen: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -317,6 +318,8 @@ MonoBehaviour:
   trackers:
   - visBanks
   - getinvSmoothStone
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0

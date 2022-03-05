@@ -12,8 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject mapLine;
     public Transform scrollable;
 
+    public GameObject musicObject;
     public List<Encounter> encountersList;
-    List<string> trackers = new List<string> { };
+    public List<AudioClip> availableTracks;
+    private List<string> currentlyPlaying = new List<string>();
+    private List<musicController> currentMusic = new List<musicController>();
+    private  List<string> trackers = new List<string> { };
 
     public Gradient[] lineGrad;
 
@@ -47,6 +51,7 @@ public class GameManager : MonoBehaviour
     public TextMeshPro cardText;
     public List<TextMeshPro> cardChoices;
     public GameObject selector;
+    public SpriteRenderer selectorSprite;
 
     private bool panelChange;
     private bool panelShow;
@@ -56,6 +61,7 @@ public class GameManager : MonoBehaviour
     private bool forward = true;
     private bool chooseMode = false;
     private int selectedOption = 0;
+    private int holdOption;
     private bool colorMode = false;
 
     public int health;
@@ -63,14 +69,22 @@ public class GameManager : MonoBehaviour
     public TextMeshPro healthCounter;
     public TextMeshPro coinsCounter;
     private bool fade;
+    private bool secFade;
     private float alpha = 1;
+    private float secAlpha = 1;
     private Color colorHold;
+    private Color secColorHold;
+    public Color selectedColor;
+    public Color chosenColor;
     private bool changeComplete;
     private int shiftIndex = 0;
 
     private List<choice> availableChoices = new List<choice> { };
+    private choice currentChoice;
     public riseAndDisappear healthRise;
     public riseAndDisappear wealthRise;
+
+    public bool checkInv;
 
     void Start()
     {
@@ -85,13 +99,16 @@ public class GameManager : MonoBehaviour
 
         amountPerNode = new Dictionary<NodeType, int>()
         {
-            { NodeType.REGULAR, 3},
+            { NodeType.CLEARING, 3},
             { NodeType.STRUCTURE, 2},
             { NodeType.FOREST, 3},
-            { NodeType.POND, 1}
+            { NodeType.WETLAND, 1}
         };
 
+        selectorSprite = selector.GetComponent<SpriteRenderer>();
+
         colorHold = cardText.color;
+        secColorHold = selectorSprite.color;
 
         changeStats(5, 15);
         Progress();
@@ -107,133 +124,204 @@ public class GameManager : MonoBehaviour
                 {
                     if (alpha > 0)
                     {
-                        alpha -= Time.deltaTime * 2f;
+                        alpha -= Time.deltaTime * 3f;
+
+                        if (alpha < 0.4f)
+                        {
+                            secFade = true;
+                        }
                     }
                     else
                     {
                         alpha = 0;
                         showText();
                         fade = false;
-                        changeComplete = false;
                     }
                 }
                 else
                 {
                     if (alpha < 1)
                     {
-                        alpha += Time.deltaTime * 2f;
+                        alpha += Time.deltaTime * 1.5f;
                     }
                     else
                     {
                         alpha = 1;
-                        changeComplete = true;
                     }
                 }
                 colorHold.a = alpha;
                 cardText.color = colorHold;
 
+                if (secFade)
+                {
+                    if (secAlpha > 0)
+                    {
+                        secAlpha -= Time.deltaTime * 3f;
+                    }
+                    else
+                    {
+                        secAlpha = 0;
+                        showChoices();
+                        secFade = false;
+                    }
+                }
+                else if (!secFade && !fade)
+                {
+                    if (secAlpha < 1)
+                    {
+                        secAlpha += Time.deltaTime * 1.5f;
+                    }
+                    else
+                    {
+                        secAlpha = 1;
+                        changeComplete = true;
+                    }
+                }
+
+                secColorHold.a = secAlpha;
+                chosenColor.a = secAlpha;
+                selectedColor.a = secAlpha;
+
+                for (int ind = 0; ind < 4; ind++)
+                {
+                    if (ind != holdOption)
+                    {
+                        cardChoices[ind].color = secColorHold;
+                    }
+                }
+
+                if (secFade || fade)
+                {
+                    cardChoices[holdOption].color = chosenColor;
+                    selectorSprite.color = chosenColor;
+                }
+                else
+                {
+                    cardChoices[holdOption].color = selectedColor;
+                    selectorSprite.color = selectedColor;
+                }
+
                 if (changeComplete)
                 {
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (!currentChoice.subChoice)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            healthRise.completeRise();
+                            wealthRise.completeRise();
+
+                            colorMode = false;
+                            chooseMode = false;
+                            Progress();
+                            forward = true;
+                        }
+                    }
+                    else
                     {
                         colorMode = false;
-                        chooseMode = false;
-                        Progress();
-                        healthRise.completeRise();
-                        wealthRise.completeRise();
-                        forward = true;
+
                     }
                 }
             }
             else if (!chooseMode)
             {
-                if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                if (!checkInv)
                 {
-                    if (forward)
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                     {
-                        if (directions[2])
+                        if (forward)
                         {
-                            forward = false;
-
-                            if (directions[0])
+                            if (directions[2])
                             {
-                                if (directions[1])
+                                forward = false;
+
+                                if (directions[0])
                                 {
-                                    ChooseDirection(2);
+                                    if (directions[1])
+                                    {
+                                        ChooseDirection(2);
+                                    }
+                                }
+                                else if (directions[1])
+                                {
+                                    ChooseDirection(1);
+                                }
+                                else
+                                {
+                                    ChooseDirection(0);
                                 }
                             }
-                            else if (directions[1])
+                        }
+                        else
+                        {
+                            choice++;
+                            if (choice >= options.Count)
                             {
-                                ChooseDirection(1);
+                                choice = options.Count - 1;
                             }
-                            else
+                            ChooseDirection(choice);
+                        }
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        if (forward)
+                        {
+                            if (directions[1])
                             {
-                                ChooseDirection(0);
+                                forward = false;
+
+                                if (directions[0])
+                                {
+                                    ChooseDirection(1);
+                                }
+                                else
+                                {
+                                    ChooseDirection(0);
+                                }
                             }
                         }
                     }
-                    else
-                    {
-                        choice++;
-                        if (choice >= options.Count)
-                        {
-                            choice = options.Count - 1;
-                        }
-                        ChooseDirection(choice);
-                    }
-                }
 
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    if (forward)
+                    if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
                     {
-                        if (directions[1])
+                        if (forward)
                         {
-                            forward = false;
-
                             if (directions[0])
                             {
-                                ChooseDirection(1);
-                            }
-                            else
-                            {
+                                forward = false;
                                 ChooseDirection(0);
                             }
                         }
-                    }
-                }
-
-                if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    if (forward)
-                    {
-                        if (directions[0])
+                        else
                         {
-                            forward = false;
-                            ChooseDirection(0);
+                            choice--;
+                            if (choice < 0)
+                            {
+                                choice = 0;
+                            }
+                            ChooseDirection(choice);
                         }
                     }
-                    else
+
+                    if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        choice--;
-                        if (choice < 0)
+                        if (!forward)
                         {
-                            choice = 0;
+                            ChooseCard();
+                            ShowPanels(true);
                         }
-                        ChooseDirection(choice);
                     }
                 }
-
-                if (Input.GetKeyDown(KeyCode.Space))
+                else
                 {
-                    if (!forward)
-                    {
-                        ChooseCard();
-                        ShowPanels(true);
-                    }
+
                 }
 
-
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    checkInv = !checkInv;
+                }
             }
             else
             {
@@ -258,6 +346,7 @@ public class GameManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     //Debug.Log("Selected Option : " + (selectedOption - shiftIndex));
+                    cardChoices[selectedOption - shiftIndex].color = chosenColor;
                     selectChoice(availableChoices[selectedOption - shiftIndex]);
                 }
             }
@@ -295,11 +384,11 @@ public class GameManager : MonoBehaviour
             }
 
             Vector3 textPos = imagePanel.transform.localPosition;
-            textPos.x = 110 + (panelPos * 140);
+            textPos.x = 100 + (panelPos * 140);
             textPanel.transform.localPosition = textPos;
 
             Vector3 imagePos = imagePanel.transform.localPosition;
-            imagePos.x = -110 - (panelPos * 140);
+            imagePos.x = -100 - (panelPos * 140);
             imagePanel.transform.localPosition = imagePos;
 
             Vector3 statsPos = statsPanel.transform.localPosition;
@@ -318,12 +407,23 @@ public class GameManager : MonoBehaviour
 
     void moveSelect(int selected)
     {
+        holdOption = selected;
+
+        foreach(var choiceCard in cardChoices)
+        {
+            choiceCard.color = secColorHold;
+        }
+
+        cardChoices[selected].color = selectedColor;
+        selectorSprite.color = selectedColor;
+
         selector.transform.position = cardChoices[selected].transform.position;
         float width = (cardChoices[selected].text.Length + 6) *5f;
         if (width > 175) 
         {
             width = 175;
         }
+
         selector.GetComponent<SpriteRenderer>().size = new Vector2(width, 18);
     }
 
@@ -378,10 +478,10 @@ public class GameManager : MonoBehaviour
         newMapNode.direction = dirCount;
 
         float RATIO_CHANCE_REG = 0.50f;
-        NodeType nodeType = NodeType.REGULAR;
+        NodeType nodeType = NodeType.CLEARING;
         if(journeyCount == 0)
         {
-            nodeType = NodeType.REGULAR;
+            nodeType = NodeType.CLEARING;
         }
         else if(journeyCount == 8)
         {
@@ -394,7 +494,7 @@ public class GameManager : MonoBehaviour
                 //4 is exclusive, so doesnt include castle
                 float chance = Random.Range(0.0f, 1.0f);
                 int lastOption = (journeyCount <= 4) ?  3 : 4;
-                nodeType = chance <= RATIO_CHANCE_REG ? nodeType = NodeType.REGULAR : (NodeType)Random.Range(1, lastOption);
+                nodeType = chance <= RATIO_CHANCE_REG ? nodeType = NodeType.CLEARING : (NodeType)Random.Range(1, lastOption);
             }
             while (amountPerNode[nodeType] <= 0);
 
@@ -531,7 +631,7 @@ public class GameManager : MonoBehaviour
         string typeToSet = "???";
         switch (currentType)
         {
-            case NodeType.REGULAR:
+            case NodeType.CLEARING:
                 typeToSet = "Clearing";
                 break;
             case NodeType.STRUCTURE:
@@ -540,7 +640,7 @@ public class GameManager : MonoBehaviour
             case NodeType.FOREST:
                 typeToSet = "Forest";
                 break;
-            case NodeType.POND:
+            case NodeType.WETLAND:
                 typeToSet = "Wetland";
                 break;
             case NodeType.CASTLE:
@@ -615,7 +715,7 @@ public class GameManager : MonoBehaviour
 
             counter++;
 
-            if (counter > 100)
+            if (counter > 500)
             {
                 Debug.Log("Failed to find encounter!");
                 chosenEncounter = encountersList[0];
@@ -623,40 +723,48 @@ public class GameManager : MonoBehaviour
             }
         }
         while(breakCondition);
-        
+
         //Debug.Log(encountersList[indexEncounter]);
         //Debug.Log(indexEncounter);
-
-        encountersList.RemoveAt(indexEncounter);
-
+        if (!breakCondition)
+        {
+            encountersList.RemoveAt(indexEncounter);
+        }
         //encountersList[indexEncounter].seen = true;
 
         cardImage.sprite = chosenEncounter.cardSprite;
         cardTitle.text = chosenEncounter.cardTitle;
         cardText.text = chosenEncounter.cardText.text;
 
-        clearSelect();
+        generateSelect(chosenEncounter.choices);
+    }
 
+    void generateSelect(List<choice> choiceListInput)
+    {
         List<string> choicesText = new List<string> { };
+
+        clearSelect();
+        availableChoices.Clear();
 
         for (int choiceIndex = 0; choiceIndex < 4; choiceIndex++)
         {
-            if (choiceIndex < chosenEncounter.choices.Count)
+            if (choiceIndex < choiceListInput.Count)
             {
                 bool missingTrackers = false;
 
-                foreach (string track in chosenEncounter.choices[choiceIndex].preTrackers)
+                foreach (string track in choiceListInput[choiceIndex].preTrackers)
                 {
                     if (!trackers.Contains(track.ToLower()))
                     {
+                        //Debug.Log("Missing Tracker : " + track);
                         missingTrackers = true;
                     }
                 }
 
                 if (!missingTrackers)
                 {
-                    availableChoices.Add(chosenEncounter.choices[choiceIndex]);
-                    choicesText.Add(chosenEncounter.choices[choiceIndex].choiceText);
+                    availableChoices.Add(choiceListInput[choiceIndex]);
+                    choicesText.Add(choiceListInput[choiceIndex].choiceText);
                 }
             }
         }
@@ -671,7 +779,7 @@ public class GameManager : MonoBehaviour
         chooseMode = true;
 
         selectedOption = shiftIndex;
-
+        holdOption = shiftIndex;
         moveSelect(selectedOption);
     }
 
@@ -685,10 +793,16 @@ public class GameManager : MonoBehaviour
     
     void selectChoice(choice selectedChoice)
     {
+        currentChoice = selectedChoice;
+
         int healVal = selectedChoice.healthChange;
         int wealVal = selectedChoice.wealthChange;
         changeStats(healVal, wealVal);
 
+        healthRise.initiateRise(selectedChoice.healthChange, false);
+        wealthRise.initiateRise(selectedChoice.wealthChange, false);
+
+        /*
         if (healVal == 0 || wealVal == 0)
         {
             //Debug.Log("health/wealth value are : " + healVal + wealVal);
@@ -703,16 +817,16 @@ public class GameManager : MonoBehaviour
             healthRise.initiateRise(selectedChoice.healthChange, false);
             wealthRise.initiateRise(selectedChoice.wealthChange, false);
         }
-
+        */
 
         foreach (var stringToAdd in selectedChoice.trackers)
         {
             checkTracker(stringToAdd.ToLower());
         }
 
-        clearSelect();
-        cardChoices[3].text = "Accept.";
-        moveSelect(3);
+        //clearSelect();
+        
+        changeComplete = false;
 
         colorMode = true;
         fade = true;
@@ -721,7 +835,23 @@ public class GameManager : MonoBehaviour
     void showText()
     {
         cardText.text = availableChoices[selectedOption - shiftIndex].resultText.text;
-        availableChoices.Clear();
+
+        //availableChoices.Clear();
+    }
+
+    void showChoices()
+    {
+        clearSelect();
+
+        if (!currentChoice.subChoice)
+        {
+            cardChoices[3].text = "Accept.";
+            moveSelect(3);
+        }
+        else
+        {
+            generateSelect(currentChoice.subChoices);
+        }
     }
 
     void checkTracker(string trackerToCheck)
@@ -753,13 +883,12 @@ public class GameManager : MonoBehaviour
         else if (trackerToCheck.StartsWith("reminv"))
         {
             bool foundInv = false;
+
             foreach (var invToCheck in currentInventory)
             {
                 if (invToCheck.name == trackerToCheck.Substring(3))
                 {
                     currentInventory.Remove(invToCheck);
-
-                    Debug.Log(invToCheck.name);
 
                     trackers.Remove(invToCheck.name);
 
@@ -774,9 +903,69 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Inventory item was not found : " + trackerToCheck.Substring(3));
             }
         }
+        else if (trackerToCheck.StartsWith("addmus"))
+        {
+            playMusic(trackerToCheck.Substring(6), 0.5f);
+        }
+        else if (trackerToCheck.StartsWith("remmus"))
+        {
+            playMusic(trackerToCheck.Substring(6), 0);
+        }
         else
         {
             trackers.Add(trackerToCheck);
+        }
+    }
+
+    void playMusic(string audioName, float volume)
+    {
+        musicController musicToSet = null;
+
+        for (int i = 0; i < currentMusic.Count; i++)
+        {
+            if (currentMusic[i].name.ToLower() == audioName)
+            {
+                if (volume == 0)
+                {
+                    currentMusic.RemoveAt(i);
+                    currentlyPlaying.RemoveAt(i);
+                }
+                else
+                {
+                    musicToSet = currentMusic[i];
+                    currentMusic[i].setVolume(volume, 0.1f);
+                    break;
+                }
+            }
+        }
+
+        if (musicToSet == null)
+        {
+            AudioClip newClip = null;
+
+            for (int i = 0; i < availableTracks.Count; i++)
+            {
+                if (availableTracks[i].name.ToLower() == audioName)
+                {
+                    newClip = availableTracks[i];
+                    break;
+                }
+            }
+
+            if (newClip != null)
+            {
+                GameObject newTrack = GameObject.Instantiate(musicObject, transform);
+                musicController newMusic = newTrack.GetComponent<musicController>();
+                newMusic.playClip(newClip);
+                newMusic.setVolume(0.6f, 0.1f);
+                newTrack.name = audioName;
+                currentMusic.Add(newMusic);
+                currentlyPlaying.Add(audioName);
+            }
+            else
+            {
+                Debug.Log("Could not find track : " + audioName);
+            }
         }
     }
 

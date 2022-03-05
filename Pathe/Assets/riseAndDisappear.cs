@@ -6,6 +6,7 @@ using TMPro;
 public class riseAndDisappear : MonoBehaviour
 {
     bool startRise;
+    bool stayRise;
     bool endRise;
     float fadeAlpha;
     float waitTime;
@@ -18,6 +19,7 @@ public class riseAndDisappear : MonoBehaviour
 
     Vector2 risePosition;
     float centerOffset;
+    float riseDist;
 
     void Start()
     {
@@ -37,33 +39,38 @@ public class riseAndDisappear : MonoBehaviour
         {
             if (fadeAlpha < 1)
             {
-                fadeAlpha += 5f * Time.deltaTime;
+                fadeAlpha += 2f * Time.deltaTime;
+                riseDist += 1f * Time.deltaTime;
                 setAlpha(fadeAlpha);
 
-                transform.localPosition = new Vector2(risePosition.x - centerOffset, risePosition.y + fadeAlpha * 6f);
+                transform.localPosition = new Vector2(risePosition.x - centerOffset, risePosition.y + riseDist * 3f);
             }
             else
             {
                 fadeAlpha = 1;
                 startRise = false;
-                waitTime = 0;
+                stayRise = true;
             }
         }
         else if (endRise)
         {
             if (fadeAlpha > 0)
             {
-                fadeAlpha -= 0.5f * Time.deltaTime;
+                fadeAlpha -= 0.8f * Time.deltaTime;
+                riseDist += 1f * Time.deltaTime;
                 setAlpha(fadeAlpha);
 
-                transform.localPosition = new Vector2(risePosition.x - centerOffset, risePosition.y + (1 - fadeAlpha) * 3f + 6f);
+                transform.localPosition = new Vector2(risePosition.x - centerOffset, risePosition.y + riseDist * 3f);
             }
         }
-        else
+        else if (stayRise)
         {
-            if (waitTime < 3)
+            if (waitTime < 1f)
             {
                 waitTime += 2f * Time.deltaTime;
+
+                riseDist += 1f * Time.deltaTime;
+                transform.localPosition = new Vector2(risePosition.x - centerOffset, risePosition.y + riseDist * 3f);
             }
             else
             {
@@ -74,6 +81,8 @@ public class riseAndDisappear : MonoBehaviour
 
     public void initiateRise(int valueToSet, bool center)
     {
+        waitTime = 0;
+
         if (valueToSet != 0)
         {
             startRise = true;

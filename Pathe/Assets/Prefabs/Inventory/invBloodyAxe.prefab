@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8061967667236754897}
   - component: {fileID: 5104176328347808170}
   - component: {fileID: 151336639364579592}
+  - component: {fileID: 805328692649422403}
   m_Layer: 0
   m_Name: invBloodyAxe
   m_TagString: Untagged
@@ -108,3 +109,15 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &805328692649422403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104176328347808168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f055aa363da08d142b123802da48d9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

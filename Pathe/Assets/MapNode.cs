@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NodeType { REGULAR, STRUCTURE, FOREST, POND, CASTLE }
+public enum NodeType { CLEARING, STRUCTURE, FOREST, WETLAND, CASTLE }
 
 public class MapNode : MonoBehaviour
 {

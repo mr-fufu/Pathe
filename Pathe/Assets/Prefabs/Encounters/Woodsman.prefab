@@ -59,6 +59,8 @@ MonoBehaviour:
   - visBanks
   - reminvBloodyAxe
   - getinvCleanAxe
+  subChoice: 0
+  subChoices: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -156,14 +158,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  type: 3
+  type: 2
   cardSprite: {fileID: 21300000, guid: aca55c026b2f9d046b83ed7e1fc62226, type: 3}
-  cardTitle: Abandoned Market
+  cardTitle: The Woodsman
   cardText: {fileID: 2875867112815173472}
   choices:
   - {fileID: 5065046240894660544}
   - {fileID: 2654485021638091215}
-  seen: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -317,6 +318,8 @@ MonoBehaviour:
   trackers:
   - visBanks
   - getinvSmoothStone
+  subChoice: 0
+  subChoices: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0
