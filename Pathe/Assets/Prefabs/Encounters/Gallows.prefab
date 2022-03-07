@@ -272,7 +272,6 @@ MonoBehaviour:
   - {fileID: 5065046240894660544}
   - {fileID: 2654485021638091215}
   - {fileID: 6761427457624755865}
-  seen: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -425,7 +424,6 @@ MonoBehaviour:
   trackers:
   - getinvBloodyAxe
   - visGallows
-  - addmusTestBird
   subChoice: 0
   subChoices: []
 --- !u!222 &3464431482023469307

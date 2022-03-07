@@ -161,12 +161,11 @@ MonoBehaviour:
   preTrackers: []
   type: 3
   cardSprite: {fileID: 21300000, guid: cde93d1e744b65a49bdc5c5315db4eb2, type: 3}
-  cardTitle: Abandoned Market
+  cardTitle: Sandy Bank
   cardText: {fileID: 2875867112815173472}
   choices:
   - {fileID: 5065046240894660544}
   - {fileID: 2654485021638091215}
-  seen: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
   m_ObjectHideFlags: 0

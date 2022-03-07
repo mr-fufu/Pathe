@@ -9,6 +9,7 @@ public class musicController : MonoBehaviour
     private float currentVolume;
     private float targetVolume;
     private float rate;
+    private bool selfTerminate = false;
 
     private void Update()
     {
@@ -16,7 +17,7 @@ public class musicController : MonoBehaviour
         {
             if (Mathf.Abs(targetVolume - currentVolume) > 0.01f)
             {
-                currentVolume += (targetVolume - currentVolume) * rate * Time.deltaTime * 2f;
+                currentVolume += (targetVolume - currentVolume) * rate * Time.deltaTime * 4f;
             }
             else
             {
@@ -25,6 +26,13 @@ public class musicController : MonoBehaviour
             }
 
             selfAudio.volume = currentVolume;
+        }
+        else if (selfTerminate)
+        {
+            if (currentVolume == 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -47,5 +55,12 @@ public class musicController : MonoBehaviour
             targetVolume = volumeToSet;
             volumeReached = false;
         }
+    }
+
+    public void terminate()
+    {
+        targetVolume = 0;
+        volumeReached = false;
+        selfTerminate = true;
     }
 }

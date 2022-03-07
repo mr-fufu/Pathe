@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public Gradient[] lineGrad;
 
     private int journeyCount = 0;
+    private int journeyLength = 10;
+    private int waterStart = 5;
     public List<MapNode> options;
     private NodeType currentType;
     private int choice = 0;
@@ -88,6 +90,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < availableTracks.Count; i++)
+        {
+            GameObject newTrack = GameObject.Instantiate(musicObject, transform);
+            musicController newMusic = newTrack.GetComponent<musicController>();
+            newMusic.playClip(availableTracks[i]);
+            newMusic.setVolume(0, 0.1f);
+            newTrack.name = availableTracks[i].name.ToLower();
+            currentMusic.Add(newMusic);
+            currentlyPlaying.Add(availableTracks[i].name.ToLower());
+        }
+
         Vector3 textPos = textPanel.transform.position;
         textPanel.transform.position = new Vector3(250, textPos.y, textPos.z);
 
@@ -440,7 +453,7 @@ public class GameManager : MonoBehaviour
         //amountPerNode.Select(i => $"{i.Key}: {i.Value}").ToList().ForEach(Debug.Log);
         //Debug.LogError("hi");
 
-        if(journeyCount == 8)
+        if(journeyCount == (journeyLength - 2))
         {
             directions = new List<bool> { false, true, false };
         }
@@ -467,7 +480,7 @@ public class GameManager : MonoBehaviour
 
     GameObject SpawnNode(Vector3 newMapNodePosition, int dirCount) 
     {
-        if (journeyCount > 9)
+        if (journeyCount > (journeyLength - 1))
             return null; // TODO
 
         GameObject newNode = GameObject.Instantiate(newMapNodeObject);
@@ -479,11 +492,12 @@ public class GameManager : MonoBehaviour
 
         float RATIO_CHANCE_REG = 0.50f;
         NodeType nodeType = NodeType.CLEARING;
+
         if(journeyCount == 0)
         {
             nodeType = NodeType.CLEARING;
         }
-        else if(journeyCount == 8)
+        else if(journeyCount == (journeyLength - 2))
         {
             nodeType = NodeType.CASTLE;
         }
@@ -493,7 +507,7 @@ public class GameManager : MonoBehaviour
             {
                 //4 is exclusive, so doesnt include castle
                 float chance = Random.Range(0.0f, 1.0f);
-                int lastOption = (journeyCount <= 4) ?  3 : 4;
+                int lastOption = (journeyCount <= (waterStart - 1)) ?  3 : 4;
                 nodeType = chance <= RATIO_CHANCE_REG ? nodeType = NodeType.CLEARING : (NodeType)Random.Range(1, lastOption);
             }
             while (amountPerNode[nodeType] <= 0);
@@ -698,7 +712,14 @@ public class GameManager : MonoBehaviour
             {
                 foreach (string track in checkEncounter.preTrackers)
                 {
-                    if (!trackers.Contains(track.ToLower()))
+                    if (track.ToLower().StartsWith("not"))
+                    {
+                        if (trackers.Contains(track.ToLower().Substring(3)))
+                        {
+                            satisfiesPreTrack = false;
+                        }
+                    }
+                    else if (!trackers.Contains(track.ToLower()))
                     {
                         satisfiesPreTrack = false;
                     }
@@ -838,7 +859,7 @@ public class GameManager : MonoBehaviour
 
         //availableChoices.Clear();
     }
-
+        
     void showChoices()
     {
         clearSelect();
@@ -905,7 +926,7 @@ public class GameManager : MonoBehaviour
         }
         else if (trackerToCheck.StartsWith("addmus"))
         {
-            playMusic(trackerToCheck.Substring(6), 0.5f);
+            playMusic(trackerToCheck.Substring(6), 0.1f);
         }
         else if (trackerToCheck.StartsWith("remmus"))
         {
@@ -919,27 +940,32 @@ public class GameManager : MonoBehaviour
 
     void playMusic(string audioName, float volume)
     {
-        musicController musicToSet = null;
+        bool musicFound = false;
 
         for (int i = 0; i < currentMusic.Count; i++)
         {
             if (currentMusic[i].name.ToLower() == audioName)
             {
+                Debug.Log("Set track " + currentMusic[i] + " to Volume " + volume);
+
+                musicFound = true;
+
                 if (volume == 0)
                 {
-                    currentMusic.RemoveAt(i);
-                    currentlyPlaying.RemoveAt(i);
+                    currentMusic[i].setVolume(0, 0.1f);
+                    //currentMusic[i].terminate();
+                    //currentMusic.RemoveAt(i);
+                    //currentlyPlaying.RemoveAt(i);
                 }
                 else
                 {
-                    musicToSet = currentMusic[i];
                     currentMusic[i].setVolume(volume, 0.1f);
-                    break;
                 }
+                break;
             }
         }
 
-        if (musicToSet == null)
+        if (!musicFound)
         {
             AudioClip newClip = null;
 

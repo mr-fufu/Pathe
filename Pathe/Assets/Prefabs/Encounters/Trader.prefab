@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Take what you can
+  choiceText: Make a purchase
   resultText: {fileID: 682206654176968793}
   healthChange: 0
   wealthChange: 0
@@ -103,9 +103,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You search the abandoned wares, rumaging through the empty stalls. You
-    find very little of value beyond a few coins and a strange ugly idol of a preening
-    bird carved from sandalwood.
+  m_Text: 'She shows you a smattering of items for sale from her trunk.
+
+
+    "Take
+    your time, my child," she says, with a leer.'
 --- !u!1 &1649059044454309619
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +208,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: What must have once been a thriving market now lies disheveled and in disrepair.
+  m_Text: An old lady greets you in the wood, accompanied by her wagon of trinkets
+    and led by a titanic duck.
 --- !u!212 &8081238696716248325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -355,7 +358,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Perhaps the merchants who once ran this market abandoned it for good reason.
+  m_Text: You clutch your coin purse tightly as you walk away
 --- !u!1 &4263182778164429457
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,11 +410,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Take the coins and move on
+  choiceText: Buy the Ticket [3 GOLD]
   resultText: {fileID: 1507883802781240672}
   healthChange: 0
-  wealthChange: 3
-  trackers: []
+  wealthChange: -3
+  trackers:
+  - addmusCymbals
+  - addmusOrgan
+  - getinvTicket
   subChoice: 0
   subChoices: []
 --- !u!222 &636000207920578975
@@ -453,8 +459,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You pocket the coins and leave the carved idol. It is doubtful that it
-    would have been worth keeping and it is better to travel light.
+  m_Text: 'You buy a faded ticket. It says "Admit One to the Greatest Show"
+
+
+    pocket
+    the [TICKET]'
 --- !u!1 &5703437110526095127
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,12 +515,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Take the Idol as well
+  choiceText: Buy the PLACEHOLDER 1 [10 GOLD]
   resultText: {fileID: 1714330090973497334}
   healthChange: 0
-  wealthChange: 3
+  wealthChange: -10
   trackers:
-  - getinvIdol
+  - getinvITEM1
   subChoice: 0
   subChoices: []
 --- !u!222 &9194160022622793270
@@ -553,10 +562,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The craftsmanship is exquisite, the details are intricate and each feather
-    excellently detailed. The creature depicted wears a wild grimmace, leering at
-    you through the carving. The few measly coins that enter your pouch are of little
-    value compared to the greater prize you pocket.
-
-
-    You take an [UGLY IDOL]'
+  m_Text: you buy a PLACEHOLDER 1

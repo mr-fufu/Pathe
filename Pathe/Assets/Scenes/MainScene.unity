@@ -909,12 +909,12 @@ PrefabInstance:
     - target: {fileID: 893330520088377400, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -16
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 893330520088377400, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 893330520088377400, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
         type: 3}
@@ -929,12 +929,32 @@ PrefabInstance:
     - target: {fileID: 3554464535137139317, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
         type: 3}
       propertyPath: m_textAlignment
-      value: 514
+      value: 516
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554464535137139317, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
+        type: 3}
+      propertyPath: m_text
+      value: +99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554464535137139317, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554464535137139317, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554464535137139317, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3600182965385873157, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3600182965385873157, guid: 5d4c62b8ee0f85d4486c328d1ed384b1,
         type: 3}
@@ -1054,15 +1074,18 @@ MonoBehaviour:
   encountersList:
   - {fileID: 1649059044454309615, guid: 65ade52c81b8de04db80f0e7a543fc3c, type: 3}
   - {fileID: 1649059044454309615, guid: 389374784e7c5234e871623821a28f5c, type: 3}
-  - {fileID: 1649059044454309615, guid: 65ade52c81b8de04db80f0e7a543fc3c, type: 3}
+  - {fileID: 1649059044454309615, guid: 63fa99ea746e502459c7a3cdd5bf0862, type: 3}
   - {fileID: 1649059044454309615, guid: a4dfad291a2988f4aa36f0eb99789a9c, type: 3}
   - {fileID: 1649059044454309615, guid: f44a04f258443a344943950a08acd6ff, type: 3}
   - {fileID: 1649059044454309615, guid: 6455d8004e0a6a649aefb2a7d121481f, type: 3}
   - {fileID: 1649059044454309615, guid: b31897df124b02245abf07889851ccdb, type: 3}
   - {fileID: 1649059044454309615, guid: c975520cc7e6c6f4a8b5ac5178765bbd, type: 3}
   - {fileID: 1649059044454309615, guid: 43fc54c85a4008e449d8b5f0ee57b1e3, type: 3}
+  - {fileID: 1649059044454309615, guid: 06c2def38e9a1ab4494e42ea7683b975, type: 3}
   availableTracks:
   - {fileID: 8300000, guid: 53550a88c118a274d8cff37ee6269a2a, type: 3}
+  - {fileID: 8300000, guid: 71d6ffa2667f0df498d833c10e1f7918, type: 3}
+  - {fileID: 8300000, guid: db3e451892ca59a4ba67a692f2253ef0, type: 3}
   lineGrad:
   - serializedVersion: 2
     key0: {r: 0.4716981, g: 0.23092051, b: 0.064524755, a: 1}
@@ -1217,6 +1240,11 @@ MonoBehaviour:
   - {fileID: 6154335855519424438, guid: eafdf51b856841c418566f532c2c7994, type: 3}
   - {fileID: 6154335855519424438, guid: b21265608749d4a4ead6f394860126da, type: 3}
   - {fileID: 6154335855519424438, guid: 06721485f27dce142bbdd0ac5fed5ba3, type: 3}
+  - {fileID: 6154335855519424438, guid: b303366572aabd04cab66fb6f83c3add, type: 3}
+  - {fileID: 6154335855519424438, guid: 2ffc59d78d933a04c827fbb9b4c41875, type: 3}
+  - {fileID: 6154335855519424438, guid: 6755635005b39c2469c1e310d084484b, type: 3}
+  - {fileID: 6154335855519424438, guid: 40a75c95e27335b4db4d8fbb50213e00, type: 3}
+  - {fileID: 6154335855519424438, guid: 5cd8a8186f353494bad25e4ab83f33a1, type: 3}
   inventoryContainer: {fileID: 1477215452}
   textPanel: {fileID: 1375267887}
   imagePanel: {fileID: 432711939}
@@ -1312,7 +1340,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 56975ff112b9e944c80db31e37257d63, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b1018082b1f69bf45a50c91962d2b238, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.15
   m_Pitch: 1
@@ -2008,6 +2036,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1674928387}
     m_Modifications:
+    - target: {fileID: 1675580338387492448, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675580338387492448, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2949412162704815583, guid: f7c921b80da54c3468acabfbc3f67225,
         type: 3}
       propertyPath: m_Mesh
@@ -2018,10 +2056,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health
       objectReference: {fileID: 0}
+    - target: {fileID: 7861901335175813037, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_text
+      value: '+99
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861901335175813037, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861901335175813037, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861901335175813037, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861901335175813037, guid: f7c921b80da54c3468acabfbc3f67225,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 513
+      objectReference: {fileID: 0}
     - target: {fileID: 8440173958065964140, guid: f7c921b80da54c3468acabfbc3f67225,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 8440173958065964140, guid: f7c921b80da54c3468acabfbc3f67225,
         type: 3}
