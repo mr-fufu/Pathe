@@ -99,9 +99,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The sinewy fibers of the net hold firm as it snags in the water, pulling
-    against your grip. You clench your teeth and hold firm, as the beast wears itself
-    out before finally reeling it in
+  m_Text: 'The sinewy fibers of the net snags in the water, pulling against your
+    grip. You clench your teeth and hold firm, as the beast wears itself out. Finally,
+    as it loses its strength, you reeling it in
 
 
     You get the [ FISH ]'
@@ -207,9 +207,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You come across a medium-sized pond, its surface still. As you stare into
-    the murky depths, a brief flicker of movement catches your eye, sending ripples
-    through the water
+  m_Text: You come across a stagnant pond, its surface still. As you stare into the
+    murky depths, a brief flicker of movement catches your eye, sending nearly imperceptible
+    ripples through the water
 --- !u!212 &8081238696716248325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -359,8 +359,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The water is dark, cold, and deep. You sense unseen eyes watching you from
-    beneath the pond. You leave
+  m_Text: The water is cold, dark, and deep. You sense unseen eyes watching you from
+    beneath the surface. This place does not welcome you, so you leave
 --- !u!1 &2531272722883486367
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,11 +458,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You slip your hand into the darkness of the still pond, enveloped in cold
-    water. You can feel nothing at first, but just as you begin to doubt whether
-    there had been anything in the water at all, a mouth full of sharp teeth grips
-    onto your fingers before quickly release at your recoiling hand.
-
-
-    Lose [
-    1 HEALTH ]'
+  m_Text: You slip your hand into the darkness of the pond, quickly swallowed in
+    the frigid water. You can feel nothing at first, but just as it seemed like perhaps
+    there hadn't been anything in the water at all, a mouth full of sharp teeth grips
+    onto your wrist before quickly releasing at your recoiling hand.
