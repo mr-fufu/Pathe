@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private List<musicController> currentMusic = new List<musicController>();
     private  List<string> trackers = new List<string> { };
 
+    public Animator CardBurn;
+
     public Gradient[] lineGrad;
 
     private int journeyCount = 0;
@@ -86,10 +88,21 @@ public class GameManager : MonoBehaviour
     public riseAndDisappear healthRise;
     public riseAndDisappear wealthRise;
 
+    private bool cardZoom;
+    private float zoomAmount = 80f;
+    private bool finishedChange;
+    public Camera cardCamera;
+    public BurnComplete cardBurn;
+
     public bool checkInv;
 
     void Start()
     {
+        foreach (Encounter encounterToInit in encountersList)
+        {
+            encounterToInit.Init();
+        }
+
         for (int i = 0; i < availableTracks.Count; i++)
         {
             GameObject newTrack = GameObject.Instantiate(musicObject, transform);
@@ -123,7 +136,7 @@ public class GameManager : MonoBehaviour
         colorHold = cardText.color;
         secColorHold = selectorSprite.color;
 
-        changeStats(5, 15);
+        changeStats(5, 10);
         Progress();
     }
 
@@ -375,17 +388,18 @@ public class GameManager : MonoBehaviour
 
         if (panelChange)
         {
-            float speed = 1f + panelMove;
+            float speed = 1.5f + panelMove;
             if (panelShow)
             {
                 speed = 2f - panelMove;
             }
 
-            panelMove += Time.deltaTime * Mathf.Pow(speed, 3f);
+            panelMove += Time.deltaTime * Mathf.Pow(speed, 2.5f);
 
             if (panelMove > 1)
             {
                 panelMove = 1;
+                finishedChange = true;
                 panelChange = false;
             }
 
@@ -396,7 +410,7 @@ public class GameManager : MonoBehaviour
                 panelPos = 1 - panelMove;
             }
 
-            Vector3 textPos = imagePanel.transform.localPosition;
+            Vector3 textPos = textPanel.transform.localPosition;
             textPos.x = 100 + (panelPos * 140);
             textPanel.transform.localPosition = textPos;
 
@@ -407,6 +421,25 @@ public class GameManager : MonoBehaviour
             Vector3 statsPos = statsPanel.transform.localPosition;
             statsPos.y = -60 - (panelPos * 90);
             statsPanel.transform.localPosition = statsPos;
+
+
+        }
+        else if (finishedChange & cardBurn.burnComplete)
+        {
+            if (chosenEncounter.zoom)
+            {
+                if (zoomAmount > 40f)
+                {
+                    zoomAmount -= Time.deltaTime * (zoomAmount - 35f);
+                    cardCamera.orthographicSize = zoomAmount;
+                }
+                else
+                {
+                    zoomAmount = 40f;
+                    finishedChange = false;
+                    cardBurn.burnComplete = false;
+                }
+            }
         }
     }
 
@@ -531,21 +564,21 @@ public class GameManager : MonoBehaviour
         {
             LinePoints = (new Vector3[5]{
 
-            new Vector3(currentNode.position.x, currentNode.position.y, 0),
-            new Vector3(currentNode.position.x + (20 * (dirCount - 1)) , currentNode.position.y + Random.Range(-3, 3), 0),
-            new Vector3(newMapNodePosition.x - (10 * (dirCount - 1)), currentNode.position.y + 10, 0),
-            new Vector3(newMapNodePosition.x - Random.Range(0, 3) * (dirCount - 1), newMapNodePosition.y - 20 , 0),
-            new Vector3(newMapNodePosition.x, newMapNodePosition.y, 0)});
+            new Vector3(currentNode.position.x, currentNode.position.y, currentNode.position.z),
+            new Vector3(currentNode.position.x + (20 * (dirCount - 1)) , currentNode.position.y + Random.Range(-3, 3), currentNode.position.z),
+            new Vector3(newMapNodePosition.x - (10 * (dirCount - 1)), currentNode.position.y + 10, currentNode.position.z),
+            new Vector3(newMapNodePosition.x - Random.Range(0, 3) * (dirCount - 1), newMapNodePosition.y - 20 , currentNode.position.z),
+            new Vector3(newMapNodePosition.x, newMapNodePosition.y, currentNode.position.z)});
         }
         else
         {
             LinePoints = (new Vector3[5]{
 
-            new Vector3(currentNode.position.x, currentNode.position.y, 0),
-            new Vector3(newMapNodePosition.x + Random.Range(0, 3), currentNode.position.y + 15, 0),
-            new Vector3(newMapNodePosition.x, currentNode.position.y + 30, 0),
-            new Vector3(newMapNodePosition.x + Random.Range(-3, 3), currentNode.position.y + 40, 0),
-            new Vector3(newMapNodePosition.x, newMapNodePosition.y, 0)});
+            new Vector3(currentNode.position.x, currentNode.position.y, currentNode.position.z),
+            new Vector3(newMapNodePosition.x + Random.Range(0, 3), currentNode.position.y + 15, currentNode.position.z),
+            new Vector3(newMapNodePosition.x, currentNode.position.y + 30, currentNode.position.z),
+            new Vector3(newMapNodePosition.x + Random.Range(-3, 3), currentNode.position.y + 40, currentNode.position.z),
+            new Vector3(newMapNodePosition.x, newMapNodePosition.y, currentNode.position.z)});
         }
 
         line.SetPositions(LinePoints);
@@ -738,7 +771,7 @@ public class GameManager : MonoBehaviour
 
             if (counter > 500)
             {
-                Debug.Log("Failed to find encounter!");
+                //Debug.Log("Failed to find encounter!");
                 chosenEncounter = encountersList[0];
                 break;
             }
@@ -756,6 +789,8 @@ public class GameManager : MonoBehaviour
         cardImage.sprite = chosenEncounter.cardSprite;
         cardTitle.text = chosenEncounter.cardTitle;
         cardText.text = chosenEncounter.cardText.text;
+        cardBurn.burnComplete = false;
+        CardBurn.Play("Burn");
 
         generateSelect(chosenEncounter.choices);
     }
@@ -767,19 +802,47 @@ public class GameManager : MonoBehaviour
         clearSelect();
         availableChoices.Clear();
 
-        for (int choiceIndex = 0; choiceIndex < 4; choiceIndex++)
+        for (int choiceIndex = 0; choiceIndex < choiceListInput.Count; choiceIndex++)
         {
             if (choiceIndex < choiceListInput.Count)
             {
                 bool missingTrackers = false;
+                bool orPresent = false;
+                bool orFulfilled = false;
+
+                Debug.Log("Trackers as follows:");
 
                 foreach (string track in choiceListInput[choiceIndex].preTrackers)
                 {
+                    if (track.ToLower().StartsWith("or"))
+                    {
+                        orPresent = true;
+
+                        if (trackers.Contains(track.ToLower()))
+                        {
+                            orFulfilled = true;
+                        }
+                    }
+                    else if (track.ToLower().StartsWith("not"))
+                    {
+                        if (trackers.Contains(track.ToLower()))
+                        {
+                            missingTrackers = true;
+                        }
+                    }
+
                     if (!trackers.Contains(track.ToLower()))
                     {
                         //Debug.Log("Missing Tracker : " + track);
                         missingTrackers = true;
                     }
+
+                    Debug.Log(track.ToLower());
+                }
+
+                if (orPresent)
+                {
+                    missingTrackers = orFulfilled;
                 }
 
                 if (!missingTrackers)
@@ -999,6 +1062,9 @@ public class GameManager : MonoBehaviour
     {
         if (show != panelShow)
         {
+            zoomAmount = 80f;
+            cardCamera.orthographicSize = zoomAmount;
+            finishedChange = false;
             panelMove = 0;
             panelShow = show;
             panelChange = true;

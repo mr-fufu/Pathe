@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 113788333793703074}
   m_RootOrder: 0
@@ -51,16 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Clean the BLOODY AXE
-  resultText: {fileID: 682206654176968793}
+  choiceText: Hand over your coin [ - ALL WEALTH ]
   healthChange: 0
-  wealthChange: 0
-  trackers:
-  - visBanks
-  - reminvBloodyAxe
-  - getinvCleanAxe
-  subChoice: 0
-  subChoices: []
+  wealthChange: -100
+  trackers: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -84,6 +79,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -100,10 +97,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Squatting down by the incoming tide, you carefully bring out the bloody
-    axe you found. The gore is powdery and flaking, most of it instantly dissolving
-    into a bloom of red when you dip it under the water. A lone gull stands upon
-    a nearby rock, judging you with a stare.\r\n\n[You get the CLEAN AXE]\r"
+  m_Text: You toss your coin pouch containing your meager few pieces and hand it
+    over to the bandit leader. It is snatched up, and the bandits quickly retreat
+    into the woods
 --- !u!1 &1649059044454309619
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,11 +130,13 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6547609200226236759}
   - {fileID: 8702746272486881765}
+  - {fileID: 6987492763325067296}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -157,14 +155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88becd1999c4e14882d74f2d6c242e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preTrackers: []
+  preTrackers:
+  - aspectGreed
   type: 2
   cardSprite: {fileID: 21300000, guid: 058ffe55fe6312b40a0143f30ea70a39, type: 3}
   cardTitle: Bandits
   cardText: {fileID: 2875867112815173472}
-  choices:
-  - {fileID: 5065046240894660544}
-  - {fileID: 2654485021638091215}
+  zoom: 1
 --- !u!222 &1649059044454309616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -188,6 +185,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -204,12 +203,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You gaze out into the horizon, where the pale white of the sky kisses the
-    ebbing of the tides. You remember visiting a place like this long ago, somewhere
-    in your hazy memories. The soft voice of a woman beckoned you to step into the
-    cool water, but you were scared and much too small. Now, you walk right along
-    the edge of the shoreline, watching as the footprints behind you are washed back
-    into the sand.
+  m_Text: 'Shadows stalk you through the woods. They appear without warning, and
+    quickly surround you. Armed with a myriad of weapons, poised and ready to strike,
+    they begin to close in.
+
+
+    "Your money or your life"'
 --- !u!212 &8081238696716248325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -221,10 +220,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -289,6 +290,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 113788333793703074}
   m_RootOrder: 1
@@ -310,16 +312,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preTrackers: []
-  choiceText: Search the banks
-  resultText: {fileID: 3245388796421166381}
-  healthChange: 0
-  wealthChange: 0
-  trackers:
-  - visBanks
-  - getinvSmoothStone
-  subChoice: 0
-  subChoices: []
+  preTrackers:
+  - NotInvBloodyAxe
+  - NotInvCleanAxe
+  - NotInvBlackAxe
+  choiceText: You would rather die
+  healthChange: -4
+  wealthChange: -100
+  trackers: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -343,6 +343,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -359,12 +361,112 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The sand is warm to the touch, and the banks extend far into the distance.
-    You lose interest quickly with no landmarks to herald your progress but the endless
-    waters to your left and the moors to your right. You take a seat for a short
-    rest and absent-mindedly comb your fingers through the grains. For your efforts,
-    you come across some stray twigs, decaying algae, and a surprisingly smooth pebble.
-
-
-    [You
-    find a SMOOTH STONE]'
+  m_Text: "You charge the nearest bandit but are met with the sharp crack of a blunt
+    instrument. \n\nThe darkness slowly fades as your vision returns. The pounding
+    pain in your head is accompanied by the frustration of your realization that
+    all your coin is gone"
+--- !u!1 &9118427418742401144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6987492763325067296}
+  - component: {fileID: 4322860392733580528}
+  - component: {fileID: 1034890843716632870}
+  - component: {fileID: 1528191982137618120}
+  m_Layer: 0
+  m_Name: Choice3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6987492763325067296
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118427418742401144}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 113788333793703074}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 150, y: -40}
+  m_SizeDelta: {x: 200, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4322860392733580528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118427418742401144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preTrackers:
+  - OrInvBloodyAxe
+  - OrInvCleanAxe
+  - OrInvBlackAxe
+  choiceText: Fight them off
+  healthChange: -2
+  wealthChange: 0
+  trackers: []
+--- !u!222 &1034890843716632870
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118427418742401144}
+  m_CullTransparentMesh: 0
+--- !u!114 &1528191982137618120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9118427418742401144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 8
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "You swing your axe with reckless abandon, keeping the bandits from getting
+    close. One creeps near but with a wild cleave you bury your axe into flesh with
+    a wet thump. \n\nThe other bandits gnash and growl before slowly backing off
+    into the woods. just before they melt into the dense folliage, a single spiteful
+    arrow is loosed, lodging itself firmly in your shoulder"

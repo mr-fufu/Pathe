@@ -9,12 +9,16 @@ public class Encounter : MonoBehaviour
     public NodeType type;
     public Sprite cardSprite;
     public string cardTitle;
+    //[System.NonSerialized]
     public Text cardText;
-    public List<choice> choices;
+    [System.NonSerialized]
+    public List<choice> choices = new List<choice>();
     [System.NonSerialized]
     public bool seen = false;
 
-    private void Start()
+    public bool zoom;
+
+    public void Init()
     {
         choices.Clear();
 
@@ -22,5 +26,12 @@ public class Encounter : MonoBehaviour
         {
             choices.Add(transform.GetChild(i).GetComponent<choice>());
         }
+
+        foreach (choice choiceToInit in choices)
+        {
+            choiceToInit.Init();
+        }
+
+        cardText = gameObject.GetComponent<Text>();
     }
 }

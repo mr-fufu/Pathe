@@ -50,14 +50,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc56c2f38718f548b211cb1b0284ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preTrackers:
-  - invLostRosary
-  choiceText: Pray in the chapel with [LOST ROSARY]
+  preTrackers: []
+  choiceText: Follow
   resultText: {fileID: 682206654176968793}
   healthChange: 3
   wealthChange: 0
   trackers:
-  - visChapel
+  - visTent
   subChoice: 0
   subChoices: []
 --- !u!222 &131617696982460060
@@ -99,12 +98,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You feel a sense of solace as you enter the chapel.  Your breaths disturb
-    the silence of the calm interior.  Among the overturned pews, you navigate carefully
-    around broken relics on the floor.  The still pristine altar stands defiantly,
-    inviting you.  You kneel before the altar with the rosary in hand.  The holy
-    figures in the murals guide your prayers.  The chapel may be cold and silent,
-    but not your faith.
+  m_Text: You emerge, after what may have been only a moment, or many hours. It has
+    left you disoriented, squinting at the clouds above. As you stumble away and
+    the flickering emotions of joy and excitement peter out, and by the time you
+    reach the treeline, the memories of what took place within the tent fade away.
 --- !u!1 &1649059044454309619
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,11 +203,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The chapel's crumbling spire condemns this site of abandoned faith. In
-    times past a sanctuary for both flesh and soul, now surrendered to the woods.
-    The remaining stained glass clings to the window frames together with the moss.
-    The absent door offers the unlit interior to the elements outside. Perhaps the
-    remnants of this once holy place still hungers for the attendance of the devoted.
+  m_Text: Against the backdrop of the dark forest, the red and white fabric of the
+    tent feels out of place, alien, even. From its entrance you hear a mess of muffled
+    music that seems to beckon you closer. The closer you get, the louder it becomes.
+    Once you are at the precipice of its gaping maw, a gloved hand reaches out, pale
+    and otherworldly. It invites you in.
 --- !u!212 &8081238696716248325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -312,13 +309,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Desecrate the chapel
+  choiceText: Refuse
   resultText: {fileID: 3245388796421166381}
   healthChange: 0
   wealthChange: 10
-  trackers:
-  - visChapel
-  - getinvChalice
+  trackers: []
   subChoice: 0
   subChoices: []
 --- !u!222 &3464431482023469307
@@ -360,12 +355,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Entering the chapel brings you no solace, evokes no faith.  Your breaths
-    disturb the dust suspended in the tainted air.  Broken relics crush underfoot
-    as you crudely vault the overturned pews.  The yet unscathed altar stands defiantly,
-    mocking you.  You pilfer the altar of what you can carry in hand.  Worn figures
-    in the murals witness your profane plundering.  You expect someone to rebuke
-    you, but the chapel is cold and silent.
-
-
-    You find a [HOLY CHALICE]'
+  m_Text: No. Something isn't right. You shouldn't be here. This tent shouldn't be
+    here. None of this is right. You turn away and shut your eyes tightly. When you
+    open them again, you are back in the forest, the memory of a red and white tent
+    slowly fading

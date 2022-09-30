@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 113788333793703074}
   m_RootOrder: 0
@@ -51,16 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Clean the BLOODY AXE
-  resultText: {fileID: 682206654176968793}
+  choiceText: Cross the bridge
   healthChange: 0
   wealthChange: 0
-  trackers:
-  - visBanks
-  - reminvBloodyAxe
-  - getinvCleanAxe
-  subChoice: 0
-  subChoices: []
+  trackers: []
 --- !u!222 &131617696982460060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -84,6 +79,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -100,10 +97,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Squatting down by the incoming tide, you carefully bring out the bloody
-    axe you found. The gore is powdery and flaking, most of it instantly dissolving
-    into a bloom of red when you dip it under the water. A lone gull stands upon
-    a nearby rock, judging you with a stare.\r\n\n[You get the CLEAN AXE]\r"
+  m_Text: The bridge sways as you cross. The crossing, despite being made of fraying
+    rope and rough hewn boards, feels sturdy and the structure holds fast beneath
+    your feet
 --- !u!1 &1649059044454309619
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,11 +130,12 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6547609200226236759}
   - {fileID: 8702746272486881765}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -162,9 +159,7 @@ MonoBehaviour:
   cardSprite: {fileID: 21300000, guid: 9eb9af1ea8c22c34aa7875e8d3ab897a, type: 3}
   cardTitle: Bridge
   cardText: {fileID: 2875867112815173472}
-  choices:
-  - {fileID: 5065046240894660544}
-  - {fileID: 2654485021638091215}
+  zoom: 0
 --- !u!222 &1649059044454309616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -188,6 +183,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -204,12 +201,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You gaze out into the horizon, where the pale white of the sky kisses the
-    ebbing of the tides. You remember visiting a place like this long ago, somewhere
-    in your hazy memories. The soft voice of a woman beckoned you to step into the
-    cool water, but you were scared and much too small. Now, you walk right along
-    the edge of the shoreline, watching as the footprints behind you are washed back
-    into the sand.
+  m_Text: A torrent of water grates against the embarkment, pushing past in rough
+    waves. It would be a challenge to cross here if not for the obstinate pillars
+    of the stalwart bridge standing towering over the river below. The well worn
+    planks, save for the creaking of age, appear sturdy enough to traverse
 --- !u!212 &8081238696716248325
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -221,10 +216,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -289,6 +286,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 113788333793703074}
   m_RootOrder: 1
@@ -311,15 +309,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preTrackers: []
-  choiceText: Search the banks
-  resultText: {fileID: 3245388796421166381}
-  healthChange: 0
+  choiceText: Brave the frigid waters
+  healthChange: -2
   wealthChange: 0
-  trackers:
-  - visBanks
-  - getinvSmoothStone
-  subChoice: 0
-  subChoices: []
+  trackers: []
 --- !u!222 &3464431482023469307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -343,6 +336,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -359,12 +354,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'The sand is warm to the touch, and the banks extend far into the distance.
-    You lose interest quickly with no landmarks to herald your progress but the endless
-    waters to your left and the moors to your right. You take a seat for a short
-    rest and absent-mindedly comb your fingers through the grains. For your efforts,
-    you come across some stray twigs, decaying algae, and a surprisingly smooth pebble.
-
-
-    [You
-    find a SMOOTH STONE]'
+  m_Text: The water crashes into your body as you wade into the cold water. Though
+    it is not deep enough to submerge you entirely, the current of the river is fast
+    and ferocious, battering you as it courses past. You are thrown against the stones
+    and sunken logs on the riverbed, but mange to eventually make your way across,
+    emerging unscathed save for a few cuts and bruises
